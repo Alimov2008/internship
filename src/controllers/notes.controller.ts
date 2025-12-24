@@ -24,4 +24,17 @@ export const NotesController = {
         const note = NotesService.create(title, content);
         res.status(201).json(note);
     },
+
+    update(req: Request, res: Response) {
+        const { id } = req.params;
+        const { title, content } = req.body;
+
+        const updatedNote = NotesService.update(id, title, content);
+
+        if (!updatedNote) {
+            return res.status(404).json({ error: "Note not found" });
+        }
+
+        res.status(200).json(updatedNote);
+    },
 }   
