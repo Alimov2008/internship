@@ -3,8 +3,8 @@ import { NotesService } from "../services/notes.service";
 
 export const NotesController = {
     getAll(req: Request, res: Response) {
-        const page = parseInt(req.query.page as string) || 1;
-        const limit = parseInt(req.query.limit as string) || 10;
+        const page = parseInt(req.query.page as string);
+        const limit = parseInt(req.query.limit as string);
         const search = req.query.search as string | undefined;
 
         const result = NotesService.getAllPaginated(page, limit, search);
