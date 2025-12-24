@@ -37,4 +37,15 @@ export const NotesController = {
 
         res.status(200).json(updatedNote);
     },
+
+    delete(req: Request, res: Response) {
+        const { id } = req.params;
+        const deleted = NotesService.delete(id);
+
+        if (!deleted) {
+        return res.status(404).json({ error: "Note not found" });
+        }
+
+        res.status(204).send();
+    }
 }   
