@@ -17,4 +17,11 @@ export const NotesController = {
 
         res.status(200).json(note);
     },
+
+    create(req: Request, res: Response) {
+        const { title, content } = req.body;
+
+        const note = NotesService.create(title, content);
+        res.status(201).json(note);
+    },
 }   
