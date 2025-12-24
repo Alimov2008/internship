@@ -2,9 +2,13 @@ import { Request, Response } from "express";
 import { NotesService } from "../services/notes.service";
 
 export const NotesController = {
-    getAll(_req: Request, res: Response) {
-        const notes = NotesService.getAll();
-        res.status(200).json(notes);
+    getAll(req: Request, res: Response) {
+        const page = parseInt(req.query.page as string) || 1;
+        const limit = parseInt(req.query.limit as string) || 10;
+        const search = req.query.search as string | undefined;
+
+        const result = NotesService.getAllPaginated(page, limit, search);
+        res.status(200).json(result);
     },
 
     getById(req: Request, res: Response) {

@@ -42,5 +42,29 @@ export const NotesService = {
 
     notes.splice(index, 1);
     return true;
+  },
+
+  getAllPaginated(page = 1, limit = 10, search?: string) {
+    let filteredNotes = notes;
+    if (search) {
+      const keyword = search.toLowerCase();
+      filteredNotes = notes.filter(
+        n =>
+        n.title.toLowerCase().includes(keyword) ||
+        n.content.toLowerCase().includes(keyword)
+    );
+    }
+    const start = (page - 1) * limit;
+    const end = start + limit;
+    const paginatedNotes = filteredNotes.slice(start, end);
+    return {
+        data: paginatedNotes,
+        meta: {
+            total: filteredNotes.length,
+            page,
+            limit,
+            totalPages: Math.ceil(filteredNotes.length / limit)
+        }
+    };
   }
 };
