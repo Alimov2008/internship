@@ -30,3 +30,34 @@ async function fetchNotes() {
   totalPages = result.meta.totalPages;
   pageInfo.textContent = `Page ${result.meta.page} of ${totalPages}`;
 }
+
+document.getElementById("createBtn").onclick = async () => {
+  const title = document.getElementById("title").value;
+  const content = document.getElementById("content").value;
+
+  await fetch(apiUrl, {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify({ title, content })
+  });
+
+  document.getElementById("title").value = "";
+  document.getElementById("content").value = "";
+  fetchNotes();
+};
+
+document.getElementById("searchBtn").onclick = () => {
+  currentSearch = document.getElementById("search").value;
+  page = 1;
+  fetchNotes();
+};
+
+document.getElementById("prevPage").onclick = () => {
+  if (page > 1) { page--; fetchNotes(); }
+};
+
+document.getElementById("nextPage").onclick = () => {
+  if (page < totalPages) { page++; fetchNotes(); }
+};
+
+fetchNotes();
